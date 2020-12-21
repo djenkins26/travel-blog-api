@@ -10,7 +10,7 @@ from django.middleware.csrf import get_token
 from ..models.blog_post import Blog
 from ..serializers import BlogSerializer, UserSerializer
 
-class Blog(generics.ListCreateAPIView):
+class Blogs(generics.ListCreateAPIView):
     def get(self, request):
       """index request"""
       blogs = Blog.objects.filter(owner=request.user.id)
@@ -51,18 +51,18 @@ class BlogDetail(generics.RetrieveUpdateDestroyAPIView):
         blog.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-# def partial_update(self, request, pk):
-#    """update request"""
-#    if request.data['blog'].get('owner', False):
-#        del request.data['blog']['owner']
+    def partial_update(self, request, pk):
+        """update request"""
+        if request.data['blog'].get('owner', False):
+            del request.data['blog']['owner']
 
-#    blog = get_object_or_404(Blog, pk=pk)
-#    if not request.user.id == blog.owner.id:
-#        raise PermissionDenied('Unauthorized, you do not own this post')
+        blog = get_object_or_404(Blog, pk=pk)
+        if not request.user.id == blog.owner.id:
+            raise PermissionDenied('Unauthorized, you do not own this post')
 
-#    request.data['blog']['owner'] = request.user.id
-#    data = BlogSerializer(blog, data=request.data['blog'])
-#    if data.is_valid():
-#        data.save()
-#        return Response(status.HTTP_204_NO_CONTENT)
-#    return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)
+        request.data['blog']['owner'] = request.user.id
+        data = BlogSerializer(blog, data=request.data['blog'])
+        if data.is_valid():
+            data.save()
+            return Response(status.HTTP_204_NO_CONTENT)
+        return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)
