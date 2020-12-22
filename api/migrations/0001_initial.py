@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
             name='Blog',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('country_name', models.CharField(max_length=100)),
+                ('place', models.CharField(max_length=100)),
                 ('description', models.CharField(max_length=500)),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],

@@ -16,6 +16,6 @@ class Blog(models.Model):
   def as_dict(self):
     return {
         'id': self.id,
-        'place': self.country_name,
+        'place': self.place,
         'description': self.description,
     }
