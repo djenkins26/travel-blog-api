@@ -7,7 +7,7 @@ curl "http://localhost:8000/blog_posts/" \
   --header "Authorization: Token ${TOKEN}" \
   --data '{
     "blog": {
-      "country_name": "'"${COUNTRY_NAME}"'",
+      "place": "'"${PLACE}"'",
       "description": "'"${DESCRIPTION}"'"
     }
   }'
