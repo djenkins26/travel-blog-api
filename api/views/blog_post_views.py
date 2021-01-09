@@ -33,10 +33,12 @@ class BlogDetail(generics.RetrieveUpdateDestroyAPIView):
     def get(self, request, pk):
       """show request"""
       blog = get_object_or_404(Blog, pk=pk)
-      data = BlogSerializer(blog).data
 
-      if not data['owner'] == request.user:
+
+      if not blog.owner.id == request.user.id:
           raise PermissionDenied('Unauthorized, you do not own this post')
+
+      data = BlogSerializer(blog).data
 
 
       return Response(data)
